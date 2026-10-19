@@ -1,0 +1,113 @@
+package com.freedomfighter.readersmotivation
+
+import android.content.Context
+import com.freedomfighter.readersmotivation.data.Counts
+import com.freedomfighter.readersmotivation.data.Habit
+import com.freedomfighter.readersmotivation.data.Kind
+import com.freedomfighter.readersmotivation.data.Stats
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.Locale
+
+/** Everything the screens, the widget and the reminder say about a habit. */
+object Words {
+    fun days(c: Context, n: Int): String = c.resources.getQuantityString(R.plurals.days, n, n)
+    fun urges(c: Context, n: Int): String = c.resources.getQuantityString(R.plurals.urges, n, n)
+
+    fun date(d: LocalDate): String = d.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.getDefault()))
+
+    /** "without sugar since 8 October 2026" / "walk, every day since…" / "starts on…". */
+    fun since(c: Context, h: Habit, today: LocalDate): String = when {
+        today < h.start -> c.getString(R.string.starts_on, date(h.start))
+        h.kind == Kind.STOP -> c.getString(R.string.without_since, h.name, date(h.start))
+        else -> c.getString(R.string.doing_since, h.name, date(h.start))
+    }
+
+    /**
+     * The big line: "day 12". On the day of a slip, what stays earned instead: "19 days held";
+     * the broken run is never the headline.
+     */
+    fun dayLine(c: Context, s: Stats, h: Habit? = null): String =
+        if (s.run == 0 && s.daysTotal > 0) c.getString(if (h?.kind == Kind.DO) R.string.done_big else R.string.held_big, days(c, s.daysHeld))
+        else c.getString(R.string.day_n, s.run)
+
+    /** Under the big line: "13 days held out of 14 · best run 11 days", only once a day was lost; on a slip day "out of 20 · best run 19 days". */
+    fun heldLine(c: Context, h: Habit, s: Stats): String? {
+        if (s.daysHeld == s.daysTotal && s.bestRun == s.run) return null
+        val best = c.getString(R.string.best_run, days(c, s.bestRun))
+        val held = if (s.run == 0) c.getString(R.string.of_total, s.daysTotal)
+            else c.getString(if (h.kind == Kind.STOP) R.string.held_of else R.string.done_of, days(c, s.daysHeld), s.daysTotal)
+        return if (s.bestRun > s.run) c.getString(R.string.pair, held, best) else held
+    }
+
+    /** On a slip day, the one line that looks forward. */
+    fun restartLine(c: Context, s: Stats): String? = if (s.run == 0 && s.daysTotal > 0) c.getString(R.string.restart_now) else null
+
+    fun resistedLine(c: Context, s: Stats): String = if (s.resisted == 0) c.getString(R.string.no_resisted) else urges(c, s.resisted)
+
+    /** "492 cigarettes avoided · 246 CHF not spent", or null when nothing is counted. */
+    fun unitsLine(c: Context, h: Habit, s: Stats): String? {
+        if (h.unitsPerDay <= 0.0) return null
+        val units = c.getString(R.string.units_avoided, number(s.unitsAvoided), h.unitName)
+        if (h.costPerUnit <= 0.0) return units
+        return c.getString(R.string.pair, units, c.getString(R.string.money_saved, number(s.moneySaved), h.currency))
+    }
+
+    fun number(x: Double): String = if (x == Math.floor(x) && x < 1e9) "%d".format(x.toLong()) else String.format(Locale.getDefault(), "%.1f", x)
+
+    fun milestone(c: Context, m: Int): String = when (m) {
+        1 -> c.getString(R.string.m_1); 3 -> c.getString(R.string.m_3); 7 -> c.getString(R.string.m_7); 14 -> c.getString(R.string.m_14)
+        21 -> c.getString(R.string.m_21); 30 -> c.getString(R.string.m_30); 66 -> c.getString(R.string.m_66); 100 -> c.getString(R.string.m_100)
+        180 -> c.getString(R.string.m_180); 365 -> c.getString(R.string.m_365)
+        else -> c.resources.getQuantityString(R.plurals.years, m / 365, m / 365)
+    }
+
+    /**
+     * The step line. Reached today: "one week, reached today". Otherwise the smaller of the two
+     * parts: "day 2 of one week" in the first half, "5 days to go before 66 days" in the second.
+     */
+    fun stepLine(c: Context, s: Stats): String? {
+        if (s.daysTotal == 0 || s.run == 0) return null
+        Counts.reachedMilestone(s.run)?.let { return c.getString(R.string.step_reached, milestone(c, it)) }
+        val next = Counts.nextMilestone(s.run)
+        val prev = Counts.MILESTONES.lastOrNull { it < next } ?: 0
+        val half = prev + (next - prev) / 2.0
+        return if (s.run < half) c.getString(R.string.step_of, s.run, milestone(c, next)) else c.getString(R.string.step_to, days(c, next - s.run), milestone(c, next))
+    }
+
+    /** The 66-day note, when that step is the next one or was reached today. */
+    fun stepNote(c: Context, s: Stats): String? =
+        if (Counts.reachedMilestone(s.run) == 66 || (Counts.nextMilestone(s.run) == 66 && s.run >= 30)) c.getString(R.string.m_66_note) else null
+
+    /** One line for the list, the widget and the reminder: "day 12 · 9 urges beaten". */
+    fun summary(c: Context, h: Habit, s: Stats): String {
+        val day = if (s.daysTotal == 0) c.getString(R.string.starts_on, date(h.start)) else dayLine(c, s, h)
+        return if (h.kind == Kind.STOP) c.getString(R.string.pair, day, resistedLine(c, s))
+        else if (s.doneToday) c.getString(R.string.pair, day, c.getString(R.string.done_already)) else day
+    }
+
+    /** The text to share: the since line, the day, the counts. */
+    fun shareText(c: Context, h: Habit, s: Stats, today: LocalDate): String = listOfNotNull(
+        since(c, h, today),
+        if (s.daysTotal > 0) dayLine(c, s, h) else null,
+        heldLine(c, h, s),
+        if (h.kind == Kind.STOP) resistedLine(c, s) else null,
+        unitsLine(c, h, s)
+    ).joinToString("\n")
+
+    /** "the record" rows: the grid of weeks as text, Monday first. */
+    fun gridRows(h: Habit, today: LocalDate): List<String> = Counts.grid(h, today).map { w ->
+        w.map { ch -> when (ch) { 'h' -> '■'; 's' -> '□'; 't' -> '◦'; else -> '·' } }.joinToString(" ")
+    }
+
+    fun minutesWord(m: Int): String = "%02d:%02d".format(m / 60, m % 60)
+
+    fun parseTime(text: String): Int? {
+        val t = text.trim().replace('.', ':').replace('h', ':')
+        val parts = t.split(':')
+        val h = parts.getOrNull(0)?.trim()?.toIntOrNull() ?: return null
+        val m = parts.getOrNull(1)?.trim()?.ifEmpty { "0" }?.toIntOrNull() ?: 0
+        return if (h in 0..23 && m in 0..59) h * 60 + m else null
+    }
+}
