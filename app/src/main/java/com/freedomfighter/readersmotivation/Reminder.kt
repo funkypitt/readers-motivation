@@ -13,6 +13,7 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 import com.freedomfighter.readersmotivation.data.Counts
 import com.freedomfighter.readersmotivation.data.Kind
+import com.freedomfighter.readersmotivation.widget.MotivationWidget
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZonedDateTime
@@ -21,12 +22,21 @@ import java.time.ZonedDateTime
 object Reminder {
     private const val ACTION = "com.freedomfighter.readersmotivation.REMIND"
     private const val CHANNEL = "reminder"
+    const val ACTION_NEW_DAY = "com.freedomfighter.readersmotivation.NEW_DAY"
 
-    private fun pending(context: Context): PendingIntent =
-        PendingIntent.getBroadcast(context, 7, Intent(context, ReminderReceiver::class.java).setAction(ACTION), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    private fun pending(context: Context, action: String = ACTION, code: Int = 7): PendingIntent =
+        PendingIntent.getBroadcast(context, code, Intent(context, ReminderReceiver::class.java).setAction(action), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+    /** The widget shows the day: it is redrawn just after midnight, whatever the reminder setting. */
+    private fun scheduleNewDay(context: Context) {
+        val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val at = ZonedDateTime.now().plusDays(1).with(LocalTime.of(0, 1)).withSecond(0).withNano(0)
+        runCatching { am.setAndAllowWhileIdle(AlarmManager.RTC, at.toInstant().toEpochMilli(), pending(context, ACTION_NEW_DAY, 9)) }
+    }
 
     /** (Re)arms the alarm for the next occurrence of the chosen time, or cancels it. */
     fun schedule(context: Context) {
+        scheduleNewDay(context)
         val app = context.applicationContext as App
         val minutes = app.prefs.settings.value.reminderMinutes
         val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -61,6 +71,7 @@ object Reminder {
 class ReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == "com.freedomfighter.readersmotivation.REMIND") Reminder.fire(context)
+        if (intent.action == Reminder.ACTION_NEW_DAY) MotivationWidget.refresh(context)
         // a boot, a time change, or the alarm itself: the next one is armed again
         Reminder.schedule(context)
     }

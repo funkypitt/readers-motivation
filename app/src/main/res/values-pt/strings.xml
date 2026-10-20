@@ -7,7 +7,6 @@
     <string name="today">hoje</string>
     <string name="on">ligado</string>
     <string name="off">desligado</string>
-    <string name="none">nenhum</string>
     <string name="pair">%1$s · %2$s</string>
     <string name="no_habits">Contar os dias, e as vontades vencidas.</string>
     <string name="intro_text">Algo para deixar, ou para fazer todos os dias. A app conta os dias mantidos e cada vontade vencida. Um deslize custa um dia e nada mais: o que foi ganho fica ganho. Nada sai do telefone.</string>
@@ -55,12 +54,10 @@
     <string name="doing_since">%1$s, todos os dias desde %2$s</string>
     <string name="starts_on">começa a %1$s</string>
     <string name="day_n">dia %1$d</string>
-    <string name="held_big">%1$s mantidos</string>
-    <string name="done_big">%1$s feitos</string>
     <string name="of_total">em %1$d</string>
     <string name="restart_now">recomeça-se agora · amanhã, dia 1</string>
-    <string name="held_of">%1$s mantidos em %2$d</string>
-    <string name="done_of">%1$s feitos em %2$d</string>
+    <string name="restart_now_do">recomeça-se · hoje será o dia 1 depois de feito</string>
+    <string name="held_of">%1$s em %2$d</string>
     <string name="best_run">melhor sequência %1$s</string>
     <string name="no_resisted">nenhuma vontade vencida ainda</string>
     <string name="units_avoided">%1$s %2$s evitados</string>
@@ -89,7 +86,7 @@
     <string name="share_hint">Dito a alguém, aguenta-se melhor.</string>
     <string name="last_weeks">as últimas semanas</string>
     <string name="legend_stop">■ mantido · □ deslize</string>
-    <string name="legend_do">■ feito · □ falhado</string>
+    <string name="legend_do">■ feito · □ falhado · ◦ hoje</string>
     <string name="urge_title">uma vontade</string>
     <string name="urge_text">Sobe, atinge o pico e passa, quer se alimente ou não. Três minutos a respirar com o anel, e vê-se.</string>
     <string name="urge_done_text">Três minutos. Passou?</string>
@@ -100,8 +97,8 @@
     <string name="breathe_hold">segure</string>
     <string name="breathe_out">solte</string>
     <string name="slip_title">um deslize</string>
-    <string name="slip_text">Um deslize, não uma recaída. %1$s mantidos ficam mantidos, %2$s ficam vencidas. A próxima hora conta mais do que a última.</string>
-    <string name="slip_text_do">Um dia falhado, não um hábito perdido. %1$s feitos ficam feitos. Amanhã é mais um.</string>
+    <string name="slip_text">Um deslize, não uma recaída. %1$s, %2$s. A próxima hora conta mais do que a última.</string>
+    <string name="slip_text_do">Um dia falhado, não um hábito perdido. %1$s. Amanhã é mais um.</string>
     <string name="slip_plan">o seu plano: %1$s</string>
     <string name="slip_note_prompt">o que aconteceu? (opcional)</string>
     <string name="slip_note_row">o que aconteceu…</string>
@@ -115,7 +112,6 @@
     <string name="widget_name">Reader\'s Motivation</string>
     <string name="widget_desc">o dia e a conta; ✓ conta uma vontade vencida</string>
     <string name="widget_habit_title">no widget e no lembrete</string>
-    <string name="widget_counted">contado: %1$s</string>
     <string name="reminder_title">um lembrete diário</string>
     <string name="reminder_hint">Uma linha à hora escolhida: o dia, a conta e a pergunta. Desligado enquanto não o ligar.</string>
     <string name="time_prompt">hora (HH:MM)</string>
@@ -157,5 +153,25 @@
     <plurals name="years">
         <item quantity="one">%d ano</item>
         <item quantity="other">%d anos</item>
+    </plurals>
+    <plurals name="days_held">
+        <item quantity="one">%d dia mantido</item>
+        <item quantity="other">%d dias mantidos</item>
+    </plurals>
+    <plurals name="days_done">
+        <item quantity="one">%d dia feito</item>
+        <item quantity="other">%d dias feitos</item>
+    </plurals>
+    <plurals name="held_stay">
+        <item quantity="one">%d dia mantido fica mantido</item>
+        <item quantity="other">%d dias mantidos ficam mantidos</item>
+    </plurals>
+    <plurals name="urges_stay">
+        <item quantity="one">%d vontade vencida fica vencida</item>
+        <item quantity="other">%d vontades vencidas ficam vencidas</item>
+    </plurals>
+    <plurals name="done_stay">
+        <item quantity="one">%d dia feito fica feito</item>
+        <item quantity="other">%d dias feitos ficam feitos</item>
     </plurals>
 </resources>

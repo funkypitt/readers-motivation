@@ -150,7 +150,7 @@ fun HabitScreen(nav: Nav, app: App, activity: MainActivity, id: String) {
                     if (s.daysTotal > 0) {
                         T(Words.dayLine(context, s, h), size = typo.big, maxLines = 2, lineHeightMul = 1.1f)
                         Words.heldLine(context, h, s)?.let { Small(it, Modifier.padding(top = 4.dp), maxLines = 2) }
-                        Words.restartLine(context, s)?.let { Small(it, Modifier.padding(top = 4.dp), maxLines = 2) }
+                        Words.restartLine(context, s, h)?.let { Small(it, Modifier.padding(top = 4.dp), maxLines = 2) }
                         if (h.kind == Kind.STOP) T(Words.resistedLine(context, s), Modifier.padding(top = 10.dp), size = typo.title, maxLines = 2)
                         Words.unitsLine(context, h, s)?.let { T(it, Modifier.padding(top = 4.dp), size = typo.title, maxLines = 2) }
                         Words.stepLine(context, s)?.let { Small(it, Modifier.padding(top = 10.dp), maxLines = 2) }
@@ -285,14 +285,17 @@ fun SlipScreen(nav: Nav, app: App, id: String) {
         Column(Modifier.fillMaxSize()) {
             ScreenTitle(stringResource(R.string.slip_title), onBack = { nav.pop() })
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
-                val text = if (h.kind == Kind.STOP) stringResource(R.string.slip_text, Words.days(context, s.daysHeld), Words.urges(context, s.resisted))
-                    else stringResource(R.string.slip_text_do, Words.days(context, s.daysHeld))
+                // what will stay once today is written as a slip (today was counted as held so far)
+                val slippedToday = h.events.any { it.type == EventType.SLIP && it.date() == today }
+                val heldAfter = if (h.kind == Kind.STOP && !slippedToday) (s.daysHeld - 1).coerceAtLeast(0) else s.daysHeld
+                val text = if (h.kind == Kind.STOP) stringResource(R.string.slip_text, Words.heldStay(context, heldAfter), Words.urgesStay(context, s.resisted))
+                    else stringResource(R.string.slip_text_do, Words.doneStay(context, s.daysHeld))
                 T(text, Modifier.padding(horizontal = rowPadH).padding(top = 18.dp, bottom = 12.dp), size = typo.title, maxLines = 8)
                 if (h.plan.isNotBlank()) { Rule(); T(stringResource(R.string.slip_plan, h.plan), Modifier.padding(horizontal = rowPadH, vertical = 12.dp), size = typo.title, maxLines = 6) }
                 Rule()
-                TextRow(note.ifBlank { stringResource(R.string.slip_note_row) }, size = typo.title) { prompt = true }
-                Rule()
-                TextRow(stringResource(R.string.slip_confirm), inverted = true) {
+                // a habit to do writes nothing (the day is simply not marked), so there is nothing to note
+                if (h.kind == Kind.STOP) { TextRow(note.ifBlank { stringResource(R.string.slip_note_row) }, size = typo.title) { prompt = true }; Rule() }
+                TextRow(stringResource(R.string.slip_confirm), inverted = true, size = typo.title) {
                     tick()
                     if (h.kind == Kind.STOP) app.store.add(h.id, Event(System.currentTimeMillis(), EventType.SLIP, note.trim()))
                     nav.popTo(h.id)

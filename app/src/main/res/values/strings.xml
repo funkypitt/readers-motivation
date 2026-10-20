@@ -8,7 +8,6 @@
     <string name="today">today</string>
     <string name="on">on</string>
     <string name="off">off</string>
-    <string name="none">none</string>
     <string name="pair">%1$s · %2$s</string>
     <string name="no_habits">Count the days, and the urges you beat.</string>
     <string name="intro_text">Something to stop, or something to do every day. The app counts the days held and every urge you beat. A slip costs one day and nothing else: what you earned stays earned. Nothing leaves the phone.</string>
@@ -50,18 +49,16 @@
     <string name="save">save</string>
     <string name="edit">change</string>
     <string name="delete_habit">delete this habit</string>
-    <string name="delete_q">delete « %1$s » and everything counted?</string>
+    <string name="delete_q">delete “%1$s” and everything counted?</string>
     <string name="delete_yes">delete</string>
     <string name="without_since">without %1$s since %2$s</string>
     <string name="doing_since">%1$s, every day since %2$s</string>
     <string name="starts_on">starts on %1$s</string>
     <string name="day_n">day %1$d</string>
-    <string name="held_big">%1$s held</string>
-    <string name="done_big">%1$s done</string>
     <string name="of_total">out of %1$d</string>
     <string name="restart_now">starting again now · tomorrow is day 1</string>
-    <string name="held_of">%1$s held out of %2$d</string>
-    <string name="done_of">%1$s done out of %2$d</string>
+    <string name="restart_now_do">starting again · today is day 1 once it is done</string>
+    <string name="held_of">%1$s out of %2$d</string>
     <string name="best_run">best run %1$s</string>
     <string name="no_resisted">no urge beaten yet</string>
     <string name="units_avoided">%1$s %2$s avoided</string>
@@ -90,7 +87,7 @@
     <string name="share_hint">Said to someone, it holds better.</string>
     <string name="last_weeks">the last weeks</string>
     <string name="legend_stop">■ held · □ slip</string>
-    <string name="legend_do">■ done · □ missed</string>
+    <string name="legend_do">■ done · □ missed · ◦ today</string>
     <string name="urge_title">an urge</string>
     <string name="urge_text">It rises, peaks and passes, whether you feed it or not. Three minutes of breathing with the ring, and see.</string>
     <string name="urge_done_text">Three minutes. Did it pass?</string>
@@ -101,8 +98,8 @@
     <string name="breathe_hold">hold</string>
     <string name="breathe_out">breathe out</string>
     <string name="slip_title">a slip</string>
-    <string name="slip_text">A slip, not a relapse. %1$s held stay held, %2$s stay beaten. The next hour counts more than the last one.</string>
-    <string name="slip_text_do">A day missed, not a habit lost. %1$s done stay done. Tomorrow is one more.</string>
+    <string name="slip_text">A slip, not a relapse. %1$s, %2$s. The next hour counts more than the last one.</string>
+    <string name="slip_text_do">A day missed, not a habit lost. %1$s. Tomorrow is one more.</string>
     <string name="slip_plan">your plan: %1$s</string>
     <string name="slip_note_prompt">what happened? (optional)</string>
     <string name="slip_note_row">what happened…</string>
@@ -116,7 +113,6 @@
     <string name="widget_name">Reader\'s Motivation</string>
     <string name="widget_desc">the day and the count; ✓ counts an urge beaten</string>
     <string name="widget_habit_title">on the widget and in the reminder</string>
-    <string name="widget_counted">counted: %1$s</string>
     <string name="reminder_title">a daily reminder</string>
     <string name="reminder_hint">One line at the hour you choose: the day, the count, and the question. Off unless you turn it on.</string>
     <string name="time_prompt">time (HH:MM)</string>
@@ -158,5 +154,25 @@
     <plurals name="years">
         <item quantity="one">%d year</item>
         <item quantity="other">%d years</item>
+    </plurals>
+    <plurals name="days_held">
+        <item quantity="one">%d day held</item>
+        <item quantity="other">%d days held</item>
+    </plurals>
+    <plurals name="days_done">
+        <item quantity="one">%d day done</item>
+        <item quantity="other">%d days done</item>
+    </plurals>
+    <plurals name="held_stay">
+        <item quantity="one">%d day held stays held</item>
+        <item quantity="other">%d days held stay held</item>
+    </plurals>
+    <plurals name="urges_stay">
+        <item quantity="one">%d urge beaten stays beaten</item>
+        <item quantity="other">%d urges beaten stay beaten</item>
+    </plurals>
+    <plurals name="done_stay">
+        <item quantity="one">%d day done stays done</item>
+        <item quantity="other">%d days done stay done</item>
     </plurals>
 </resources>

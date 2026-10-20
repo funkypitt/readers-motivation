@@ -7,7 +7,6 @@
     <string name="today">heute</string>
     <string name="on">ein</string>
     <string name="off">aus</string>
-    <string name="none">keine</string>
     <string name="pair">%1$s · %2$s</string>
     <string name="no_habits">Die Tage zählen, und die überstandenen Gelüste.</string>
     <string name="intro_text">Etwas aufhören, oder etwas jeden Tag tun. Die App zählt die durchgehaltenen Tage und jedes überstandene Gelüst. Ein Ausrutscher kostet einen Tag, sonst nichts: was erreicht ist, bleibt. Nichts verlässt das Telefon.</string>
@@ -49,18 +48,16 @@
     <string name="save">speichern</string>
     <string name="edit">ändern</string>
     <string name="delete_habit">diese Gewohnheit löschen</string>
-    <string name="delete_q">« %1$s » und alles Gezählte löschen?</string>
+    <string name="delete_q">„%1$s“ und alles Gezählte löschen?</string>
     <string name="delete_yes">löschen</string>
     <string name="without_since">ohne %1$s seit %2$s</string>
     <string name="doing_since">%1$s, jeden Tag seit %2$s</string>
     <string name="starts_on">beginnt am %1$s</string>
     <string name="day_n">Tag %1$d</string>
-    <string name="held_big">%1$s durchgehalten</string>
-    <string name="done_big">%1$s getan</string>
     <string name="of_total">von %1$d</string>
     <string name="restart_now">jetzt geht es weiter · morgen ist Tag 1</string>
-    <string name="held_of">%1$s von %2$d durchgehalten</string>
-    <string name="done_of">%1$s von %2$d getan</string>
+    <string name="restart_now_do">es geht weiter · heute ist Tag 1, sobald es getan ist</string>
+    <string name="held_of">%1$s von %2$d</string>
     <string name="best_run">längste Serie %1$s</string>
     <string name="no_resisted">noch kein Gelüst überstanden</string>
     <string name="units_avoided">%1$s %2$s vermieden</string>
@@ -89,7 +86,7 @@
     <string name="share_hint">Jemandem gesagt, hält es besser.</string>
     <string name="last_weeks">die letzten Wochen</string>
     <string name="legend_stop">■ durchgehalten · □ Ausrutscher</string>
-    <string name="legend_do">■ getan · □ verpasst</string>
+    <string name="legend_do">■ getan · □ verpasst · ◦ heute</string>
     <string name="urge_title">ein Gelüst</string>
     <string name="urge_text">Es steigt, erreicht den Gipfel und vergeht, ob man es nährt oder nicht. Drei Minuten Atmen mit dem Ring, dann sehen wir.</string>
     <string name="urge_done_text">Drei Minuten. Ist es vorbei?</string>
@@ -100,8 +97,8 @@
     <string name="breathe_hold">halten</string>
     <string name="breathe_out">ausatmen</string>
     <string name="slip_title">ein Ausrutscher</string>
-    <string name="slip_text">Ein Ausrutscher, kein Rückfall. %1$s bleiben durchgehalten, %2$s bleiben überstanden. Die nächste Stunde zählt mehr als die letzte.</string>
-    <string name="slip_text_do">Ein Tag verpasst, keine Gewohnheit verloren. %1$s bleiben getan. Morgen kommt einer dazu.</string>
+    <string name="slip_text">Ein Ausrutscher, kein Rückfall. %1$s, %2$s. Die nächste Stunde zählt mehr als die letzte.</string>
+    <string name="slip_text_do">Ein Tag verpasst, keine Gewohnheit verloren. %1$s. Morgen kommt einer dazu.</string>
     <string name="slip_plan">Ihr Plan: %1$s</string>
     <string name="slip_note_prompt">was ist passiert? (optional)</string>
     <string name="slip_note_row">was passiert ist…</string>
@@ -115,7 +112,6 @@
     <string name="widget_name">Reader\'s Motivation</string>
     <string name="widget_desc">der Tag und die Zahl; ✓ zählt ein überstandenes Gelüst</string>
     <string name="widget_habit_title">im Widget und in der Erinnerung</string>
-    <string name="widget_counted">gezählt: %1$s</string>
     <string name="reminder_title">eine tägliche Erinnerung</string>
     <string name="reminder_hint">Eine Zeile zur gewählten Stunde: der Tag, die Zahl und die Frage. Aus, solange Sie es nicht einschalten.</string>
     <string name="time_prompt">Uhrzeit (HH:MM)</string>
@@ -157,5 +153,25 @@
     <plurals name="years">
         <item quantity="one">%d Jahr</item>
         <item quantity="other">%d Jahre</item>
+    </plurals>
+    <plurals name="days_held">
+        <item quantity="one">%d Tag durchgehalten</item>
+        <item quantity="other">%d Tage durchgehalten</item>
+    </plurals>
+    <plurals name="days_done">
+        <item quantity="one">%d Tag getan</item>
+        <item quantity="other">%d Tage getan</item>
+    </plurals>
+    <plurals name="held_stay">
+        <item quantity="one">%d Tag bleibt durchgehalten</item>
+        <item quantity="other">%d Tage bleiben durchgehalten</item>
+    </plurals>
+    <plurals name="urges_stay">
+        <item quantity="one">%d Gelüst bleibt überstanden</item>
+        <item quantity="other">%d Gelüste bleiben überstanden</item>
+    </plurals>
+    <plurals name="done_stay">
+        <item quantity="one">%d Tag bleibt getan</item>
+        <item quantity="other">%d Tage bleiben getan</item>
     </plurals>
 </resources>

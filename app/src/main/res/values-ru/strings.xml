@@ -7,7 +7,6 @@
     <string name="today">сегодня</string>
     <string name="on">вкл.</string>
     <string name="off">выкл.</string>
-    <string name="none">нет</string>
     <string name="pair">%1$s · %2$s</string>
     <string name="no_habits">Считать дни и побеждённые желания.</string>
     <string name="intro_text">Что-то бросить или что-то делать каждый день. Приложение считает выдержанные дни и каждое побеждённое желание. Срыв стоит один день и ничего больше: достигнутое остаётся. Ничто не покидает телефон.</string>
@@ -55,12 +54,10 @@
     <string name="doing_since">%1$s, каждый день с %2$s</string>
     <string name="starts_on">начнётся %1$s</string>
     <string name="day_n">день %1$d</string>
-    <string name="held_big">%1$s выдержано</string>
-    <string name="done_big">%1$s сделано</string>
     <string name="of_total">из %1$d</string>
     <string name="restart_now">начинаем заново сейчас · завтра день 1</string>
-    <string name="held_of">%1$s выдержано из %2$d</string>
-    <string name="done_of">%1$s сделано из %2$d</string>
+    <string name="restart_now_do">начинаем заново · сегодня будет день 1, как только сделано</string>
+    <string name="held_of">%1$s из %2$d</string>
     <string name="best_run">лучшая серия %1$s</string>
     <string name="no_resisted">пока ни одного побеждённого желания</string>
     <string name="units_avoided">%1$s %2$s избегнуто</string>
@@ -89,7 +86,7 @@
     <string name="share_hint">Сказанное кому-то держится крепче.</string>
     <string name="last_weeks">последние недели</string>
     <string name="legend_stop">■ выдержан · □ срыв</string>
-    <string name="legend_do">■ сделано · □ пропущено</string>
+    <string name="legend_do">■ сделано · □ пропущено · ◦ сегодня</string>
     <string name="urge_title">желание</string>
     <string name="urge_text">Оно нарастает, достигает пика и проходит, кормите вы его или нет. Три минуты дыхания с кольцом, и посмотрим.</string>
     <string name="urge_done_text">Три минуты. Прошло?</string>
@@ -100,8 +97,8 @@
     <string name="breathe_hold">задержите</string>
     <string name="breathe_out">выдох</string>
     <string name="slip_title">срыв</string>
-    <string name="slip_text">Срыв, а не возврат. %1$s остаются выдержанными, %2$s остаются побеждёнными. Следующий час важнее прошедшего.</string>
-    <string name="slip_text_do">Пропущен день, а не привычка. %1$s остаются сделанными. Завтра будет ещё один.</string>
+    <string name="slip_text">Срыв, а не возврат. %1$s, %2$s. Следующий час важнее прошедшего.</string>
+    <string name="slip_text_do">Пропущен день, а не привычка. %1$s. Завтра будет ещё один.</string>
     <string name="slip_plan">ваш план: %1$s</string>
     <string name="slip_note_prompt">что случилось? (необязательно)</string>
     <string name="slip_note_row">что случилось…</string>
@@ -115,7 +112,6 @@
     <string name="widget_name">Reader\'s Motivation</string>
     <string name="widget_desc">день и счёт; ✓ засчитывает побеждённое желание</string>
     <string name="widget_habit_title">в виджете и в напоминании</string>
-    <string name="widget_counted">засчитано: %1$s</string>
     <string name="reminder_title">ежедневное напоминание</string>
     <string name="reminder_hint">Одна строка в выбранный час: день, счёт и вопрос. Выключено, пока вы не включите.</string>
     <string name="time_prompt">время (ЧЧ:ММ)</string>
@@ -163,5 +159,35 @@
         <item quantity="few">%d года</item>
         <item quantity="many">%d лет</item>
         <item quantity="other">%d лет</item>
+    </plurals>
+    <plurals name="days_held">
+        <item quantity="one">%d день выдержан</item>
+        <item quantity="few">%d дня выдержано</item>
+        <item quantity="many">%d дней выдержано</item>
+        <item quantity="other">%d дней выдержано</item>
+    </plurals>
+    <plurals name="days_done">
+        <item quantity="one">%d день сделан</item>
+        <item quantity="few">%d дня сделано</item>
+        <item quantity="many">%d дней сделано</item>
+        <item quantity="other">%d дней сделано</item>
+    </plurals>
+    <plurals name="held_stay">
+        <item quantity="one">%d день остаётся выдержанным</item>
+        <item quantity="few">%d дня остаются выдержанными</item>
+        <item quantity="many">%d дней остаются выдержанными</item>
+        <item quantity="other">%d дней остаются выдержанными</item>
+    </plurals>
+    <plurals name="urges_stay">
+        <item quantity="one">%d желание остаётся побеждённым</item>
+        <item quantity="few">%d желания остаются побеждёнными</item>
+        <item quantity="many">%d желаний остаются побеждёнными</item>
+        <item quantity="other">%d желаний остаются побеждёнными</item>
+    </plurals>
+    <plurals name="done_stay">
+        <item quantity="one">%d день остаётся сделанным</item>
+        <item quantity="few">%d дня остаются сделанными</item>
+        <item quantity="many">%d дней остаются сделанными</item>
+        <item quantity="other">%d дней остаются сделанными</item>
     </plurals>
 </resources>

@@ -7,7 +7,6 @@
     <string name="today">aujourd\'hui</string>
     <string name="on">activé</string>
     <string name="off">désactivé</string>
-    <string name="none">aucun</string>
     <string name="pair">%1$s · %2$s</string>
     <string name="no_habits">Compter les jours, et les envies surmontées.</string>
     <string name="intro_text">Quelque chose à arrêter, ou à faire chaque jour. L\'app compte les jours tenus et chaque envie surmontée. Un écart coûte un jour, rien d\'autre : ce qui est acquis reste acquis. Rien ne quitte le téléphone.</string>
@@ -55,12 +54,10 @@
     <string name="doing_since">%1$s, chaque jour depuis le %2$s</string>
     <string name="starts_on">commence le %1$s</string>
     <string name="day_n">jour %1$d</string>
-    <string name="held_big">%1$s tenus</string>
-    <string name="done_big">%1$s faits</string>
     <string name="of_total">sur %1$d</string>
     <string name="restart_now">on repart maintenant · demain, jour 1</string>
-    <string name="held_of">%1$s tenus sur %2$d</string>
-    <string name="done_of">%1$s faits sur %2$d</string>
+    <string name="restart_now_do">on repart · aujourd\'hui sera le jour 1 une fois fait</string>
+    <string name="held_of">%1$s sur %2$d</string>
     <string name="best_run">meilleure série %1$s</string>
     <string name="no_resisted">pas encore d\'envie surmontée</string>
     <string name="units_avoided">%1$s %2$s évités</string>
@@ -89,7 +86,7 @@
     <string name="share_hint">Dit à quelqu\'un, ça tient mieux.</string>
     <string name="last_weeks">les dernières semaines</string>
     <string name="legend_stop">■ tenu · □ écart</string>
-    <string name="legend_do">■ fait · □ manqué</string>
+    <string name="legend_do">■ fait · □ manqué · ◦ aujourd\'hui</string>
     <string name="urge_title">une envie</string>
     <string name="urge_text">Elle monte, culmine et passe, qu\'on la nourrisse ou non. Trois minutes de respiration avec l\'anneau, et on voit.</string>
     <string name="urge_done_text">Trois minutes. Elle a passé ?</string>
@@ -100,8 +97,8 @@
     <string name="breathe_hold">gardez</string>
     <string name="breathe_out">soufflez</string>
     <string name="slip_title">un écart</string>
-    <string name="slip_text">Un écart, pas une rechute. %1$s tenus restent tenus, %2$s restent surmontées. L\'heure qui vient compte plus que celle qui passe.</string>
-    <string name="slip_text_do">Un jour manqué, pas une habitude perdue. %1$s faits restent faits. Demain en fait un de plus.</string>
+    <string name="slip_text">Un écart, pas une rechute. %1$s, %2$s. L\'heure qui vient compte plus que celle qui passe.</string>
+    <string name="slip_text_do">Un jour manqué, pas une habitude perdue. %1$s. Demain en fait un de plus.</string>
     <string name="slip_plan">votre plan : %1$s</string>
     <string name="slip_note_prompt">que s\'est-il passé ? (facultatif)</string>
     <string name="slip_note_row">ce qui s\'est passé…</string>
@@ -115,7 +112,6 @@
     <string name="widget_name">Reader\'s Motivation</string>
     <string name="widget_desc">le jour et le compte ; ✓ compte une envie surmontée</string>
     <string name="widget_habit_title">sur le widget et dans le rappel</string>
-    <string name="widget_counted">compté : %1$s</string>
     <string name="reminder_title">un rappel quotidien</string>
     <string name="reminder_hint">Une ligne à l\'heure choisie : le jour, le compte, et la question. Éteint tant que vous ne l\'allumez pas.</string>
     <string name="time_prompt">heure (HH:MM)</string>
@@ -157,5 +153,25 @@
     <plurals name="years">
         <item quantity="one">%d an</item>
         <item quantity="other">%d ans</item>
+    </plurals>
+    <plurals name="days_held">
+        <item quantity="one">%d jour tenu</item>
+        <item quantity="other">%d jours tenus</item>
+    </plurals>
+    <plurals name="days_done">
+        <item quantity="one">%d jour fait</item>
+        <item quantity="other">%d jours faits</item>
+    </plurals>
+    <plurals name="held_stay">
+        <item quantity="one">%d jour tenu reste tenu</item>
+        <item quantity="other">%d jours tenus restent tenus</item>
+    </plurals>
+    <plurals name="urges_stay">
+        <item quantity="one">%d envie surmontée reste surmontée</item>
+        <item quantity="other">%d envies surmontées restent surmontées</item>
+    </plurals>
+    <plurals name="done_stay">
+        <item quantity="one">%d jour fait reste fait</item>
+        <item quantity="other">%d jours faits restent faits</item>
     </plurals>
 </resources>

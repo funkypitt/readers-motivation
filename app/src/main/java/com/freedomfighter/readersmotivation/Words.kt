@@ -14,6 +14,11 @@ import java.util.Locale
 object Words {
     fun days(c: Context, n: Int): String = c.resources.getQuantityString(R.plurals.days, n, n)
     fun urges(c: Context, n: Int): String = c.resources.getQuantityString(R.plurals.urges, n, n)
+    fun daysHeld(c: Context, n: Int): String = c.resources.getQuantityString(R.plurals.days_held, n, n)
+    fun daysDone(c: Context, n: Int): String = c.resources.getQuantityString(R.plurals.days_done, n, n)
+    fun heldStay(c: Context, n: Int): String = c.resources.getQuantityString(R.plurals.held_stay, n, n)
+    fun urgesStay(c: Context, n: Int): String = c.resources.getQuantityString(R.plurals.urges_stay, n, n)
+    fun doneStay(c: Context, n: Int): String = c.resources.getQuantityString(R.plurals.done_stay, n, n)
 
     fun date(d: LocalDate): String = d.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(Locale.getDefault()))
 
@@ -26,23 +31,32 @@ object Words {
 
     /**
      * The big line: "day 12". On the day of a slip, what stays earned instead: "19 days held";
-     * the broken run is never the headline.
+     * the broken run is never the headline. A habit to do with nothing done yet: "day 1", the
+     * day it becomes once it is done.
      */
-    fun dayLine(c: Context, s: Stats, h: Habit? = null): String =
-        if (s.run == 0 && s.daysTotal > 0) c.getString(if (h?.kind == Kind.DO) R.string.done_big else R.string.held_big, days(c, s.daysHeld))
-        else c.getString(R.string.day_n, s.run)
+    fun dayLine(c: Context, s: Stats, h: Habit? = null): String = when {
+        s.run > 0 || s.daysTotal == 0 -> c.getString(R.string.day_n, s.run)
+        h?.kind == Kind.DO -> if (s.daysHeld == 0) c.getString(R.string.day_n, 1) else daysDone(c, s.daysHeld)
+        else -> daysHeld(c, s.daysHeld)
+    }
 
     /** Under the big line: "13 days held out of 14 · best run 11 days", only once a day was lost; on a slip day "out of 20 · best run 19 days". */
     fun heldLine(c: Context, h: Habit, s: Stats): String? {
         if (s.daysHeld == s.daysTotal && s.bestRun == s.run) return null
+        if (h.kind == Kind.DO && s.daysHeld == 0) return null
         val best = c.getString(R.string.best_run, days(c, s.bestRun))
         val held = if (s.run == 0) c.getString(R.string.of_total, s.daysTotal)
-            else c.getString(if (h.kind == Kind.STOP) R.string.held_of else R.string.done_of, days(c, s.daysHeld), s.daysTotal)
+            else c.getString(R.string.held_of, if (h.kind == Kind.STOP) daysHeld(c, s.daysHeld) else daysDone(c, s.daysHeld), s.daysTotal)
         return if (s.bestRun > s.run) c.getString(R.string.pair, held, best) else held
     }
 
     /** On a slip day, the one line that looks forward. */
-    fun restartLine(c: Context, s: Stats): String? = if (s.run == 0 && s.daysTotal > 0) c.getString(R.string.restart_now) else null
+    fun restartLine(c: Context, s: Stats, h: Habit): String? = when {
+        s.run > 0 || s.daysTotal == 0 -> null
+        h.kind == Kind.STOP -> c.getString(R.string.restart_now)
+        s.daysHeld > 0 -> c.getString(R.string.restart_now_do)
+        else -> null
+    }
 
     fun resistedLine(c: Context, s: Stats): String = if (s.resisted == 0) c.getString(R.string.no_resisted) else urges(c, s.resisted)
 
@@ -104,7 +118,9 @@ object Words {
     fun minutesWord(m: Int): String = "%02d:%02d".format(m / 60, m % 60)
 
     fun parseTime(text: String): Int? {
-        val t = text.trim().replace('.', ':').replace('h', ':')
+        var t = text.trim().replace('.', ':').replace('h', ':')
+        // "730" and "0730" as well as "7:30"
+        if (t.length in 3..4 && t.all { it.isDigit() }) t = t.dropLast(2) + ":" + t.takeLast(2)
         val parts = t.split(':')
         val h = parts.getOrNull(0)?.trim()?.toIntOrNull() ?: return null
         val m = parts.getOrNull(1)?.trim()?.ifEmpty { "0" }?.toIntOrNull() ?: 0
