@@ -5,7 +5,8 @@ import android.content.SharedPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-enum class ThemeMode { DARK, LIGHT, SYSTEM }
+/** The inks, the phone's choice between them, then the Plume palettes (see [Palettes]). */
+enum class ThemeMode { DARK, LIGHT, SYSTEM, LAVANDE, SAUGE, NORDIQUE, TERRACOTTA, COQUETTE, MILITANTE, TORRIDE, NATURE }
 enum class FontChoice { SERIF, SANS, MONO }
 enum class TextSize { SMALL, MEDIUM, LARGE }
 enum class Align { LEFT, CENTER }
@@ -43,7 +44,8 @@ class Prefs(context: Context) {
     private inline fun <reified E : Enum<E>> enumOr(name: String?, default: E): E =
         name?.let { n -> enumValues<E>().firstOrNull { it.name == n } } ?: default
 
-    fun toggleTheme(isDark: Boolean) = sp.edit().putString("theme", if (isDark) ThemeMode.LIGHT.name else ThemeMode.DARK.name).apply()
+    /** One tap: the next theme, round and round. */
+    fun nextTheme() = sp.edit().putString("theme", Palettes.next(settings.value.theme).name).apply()
     fun setFont(f: FontChoice) = sp.edit().putString("font", f.name).apply()
     fun setTextSize(s: TextSize) = sp.edit().putString("text_size", s.name).apply()
     fun setHaptics(on: Boolean) = sp.edit().putBoolean("haptics", on).apply()

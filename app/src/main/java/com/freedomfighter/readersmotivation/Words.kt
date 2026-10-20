@@ -5,6 +5,7 @@ import com.freedomfighter.readersmotivation.data.Counts
 import com.freedomfighter.readersmotivation.data.Habit
 import com.freedomfighter.readersmotivation.data.Kind
 import com.freedomfighter.readersmotivation.data.Stats
+import com.freedomfighter.readersmotivation.data.ThemeMode
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -114,6 +115,14 @@ object Words {
     fun gridRows(h: Habit, today: LocalDate): List<String> = Counts.grid(h, today).map { w ->
         w.map { ch -> when (ch) { 'h' -> '■'; 's' -> '□'; 't' -> '◦'; else -> '·' } }.joinToString(" ")
     }
+
+    /** The name of a theme, as the settings row and the menu show it. */
+    fun themeName(c: Context, m: ThemeMode): String = c.getString(when (m) {
+        ThemeMode.DARK -> R.string.theme_dark; ThemeMode.LIGHT -> R.string.theme_light; ThemeMode.SYSTEM -> R.string.theme_system
+        ThemeMode.LAVANDE -> R.string.theme_lavande; ThemeMode.SAUGE -> R.string.theme_sauge; ThemeMode.NORDIQUE -> R.string.theme_nordique
+        ThemeMode.TERRACOTTA -> R.string.theme_terracotta; ThemeMode.COQUETTE -> R.string.theme_coquette; ThemeMode.MILITANTE -> R.string.theme_militante
+        ThemeMode.TORRIDE -> R.string.theme_torride; ThemeMode.NATURE -> R.string.theme_nature
+    })
 
     fun minutesWord(m: Int): String = "%02d:%02d".format(m / 60, m % 60)
 

@@ -18,6 +18,7 @@ import com.freedomfighter.readersmotivation.data.Counts
 import com.freedomfighter.readersmotivation.data.Event
 import com.freedomfighter.readersmotivation.data.EventType
 import com.freedomfighter.readersmotivation.data.Kind
+import com.freedomfighter.readersmotivation.data.Palettes
 import java.time.LocalDate
 
 /**
@@ -27,11 +28,13 @@ import java.time.LocalDate
 object MotivationWidget {
     const val ACTION_TICK = "com.freedomfighter.readersmotivation.widget.TICK"
 
+    /** The app's theme, read from the same setting: background, text, text dimmed. */
     private fun colors(context: Context): Triple<Int, Int, Int> {
-        val theme = context.getSharedPreferences("settings", Context.MODE_PRIVATE).getString("theme", "DARK")
+        val theme = Palettes.parse(context.getSharedPreferences("settings", Context.MODE_PRIVATE).getString("theme", null))
         val systemDark = (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-        val dark = when (theme) { "LIGHT" -> false; "SYSTEM" -> systemDark; else -> true }
-        return if (dark) Triple(Color.BLACK, Color.WHITE, Color.argb(140, 255, 255, 255)) else Triple(Color.WHITE, Color.BLACK, Color.argb(140, 0, 0, 0))
+        val p = Palettes.of(theme, systemDark)
+        val fg = p.fg.toInt()
+        return Triple(p.bg.toInt(), fg, Color.argb(140, Color.red(fg), Color.green(fg), Color.blue(fg)))
     }
 
     fun render(context: Context, mgr: AppWidgetManager, ids: IntArray) {

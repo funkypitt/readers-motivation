@@ -43,6 +43,7 @@ import com.freedomfighter.readersmotivation.data.Exports
 import com.freedomfighter.readersmotivation.data.FontChoice
 import com.freedomfighter.readersmotivation.data.Habit
 import com.freedomfighter.readersmotivation.data.Kind
+import com.freedomfighter.readersmotivation.data.Palettes
 import com.freedomfighter.readersmotivation.data.Store
 import com.freedomfighter.readersmotivation.data.TextSize
 import kotlinx.coroutines.delay
@@ -115,7 +116,7 @@ fun HomeScreen(nav: Nav, app: App, activity: MainActivity) {
             Box(Modifier.windowInsetsPadding(WindowInsets.navigationBars))
         }
         if (menu) TextMenu(null, emptyList(), onDismiss = { menu = false }, footer = listOf(
-            MenuItem(if (colors.isDark) stringResource(R.string.theme_light) else stringResource(R.string.theme_dark)) { app.prefs.toggleTheme(colors.isDark) },
+            MenuItem(Words.themeName(context, Palettes.next(app.prefs.settings.value.theme))) { app.prefs.nextTheme() },
             MenuItem(stringResource(R.string.settings)) { nav.push(Screen.Settings) }
         ))
     }
@@ -191,7 +192,7 @@ fun HabitScreen(nav: Nav, app: App, activity: MainActivity, id: String) {
             MenuItem(stringResource(R.string.edit)) { nav.push(Screen.Edit(h.id)) },
             MenuItem(stringResource(R.string.delete_habit)) { confirmDelete = true }
         ), onDismiss = { menu = false }, footer = listOf(
-            MenuItem(if (colors.isDark) stringResource(R.string.theme_light) else stringResource(R.string.theme_dark)) { app.prefs.toggleTheme(colors.isDark) },
+            MenuItem(Words.themeName(context, Palettes.next(app.prefs.settings.value.theme))) { app.prefs.nextTheme() },
             MenuItem(stringResource(R.string.settings)) { nav.push(Screen.Settings) }
         ))
         if (confirmDelete) TextMenu(stringResource(R.string.delete_q, h.name), listOf(
@@ -477,7 +478,7 @@ fun SettingsScreen(nav: Nav, app: App, activity: MainActivity) {
                 TextRow(stringResource(R.string.export_backup), size = typo.title) { activity.exportBackup() }
                 TextRow(stringResource(R.string.import_backup), size = typo.title) { activity.importBackup() }
                 Rule(Modifier.padding(vertical = 8.dp))
-                TextRow(if (colors.isDark) stringResource(R.string.theme_dark) else stringResource(R.string.theme_light), secondary = stringResource(R.string.colours)) { app.prefs.toggleTheme(colors.isDark) }
+                TextRow(Words.themeName(context, s.theme), secondary = stringResource(R.string.colours)) { app.prefs.nextTheme() }
                 TextRow(when (s.textSize) { TextSize.SMALL -> stringResource(R.string.size_small); TextSize.MEDIUM -> stringResource(R.string.size_medium); TextSize.LARGE -> stringResource(R.string.size_large) }, secondary = stringResource(R.string.text_size)) {
                     app.prefs.setTextSize(when (s.textSize) { TextSize.SMALL -> TextSize.MEDIUM; TextSize.MEDIUM -> TextSize.LARGE; TextSize.LARGE -> TextSize.SMALL })
                 }
